@@ -1,0 +1,130 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+int main()
+{
+    double r1, r2, r3, r4, th1, th2, th3, th4, sigma, a, b, c, t, sq1, sq2, th3d, th4d, th1d, th2d;
+    double a1, b1, c1, d1, e1, f1,w2, w3, w4, aa2, aa3, aa4, a2, b2, c2, d2, e2, f2;
+    double v2c, v2s, v3c, v3s, v4c, v4s;
+
+    cout << "Four-Bar Linkage (Link 2 as driver)" << endl;
+    cout <<"The purpose is to find th3 and th4 when th2 and the lengths are given." << endl;
+    cout << "Please refer to the diagram provided to know the variables. "<< endl << endl;\
+    cout << "Input: "<< endl;
+    cout << "r1 (mm) : "; cin >> r1; cout << endl;
+    cout << "r2 (mm) : "; cin >> r2; cout << endl;
+    cout << "r3 (mm): "; cin >> r3; cout << endl;
+    cout << "r4 (mm): "; cin >> r4; cout << endl;
+    cout << "th1 (deg) : "; cin >> th1d; cout << endl;
+    cout << "th2 (deg) : "; cin >> th2d; cout << endl;
+    cout << "w2 (rad/s) : "; cin >> w2; cout << endl << endl;
+    cout << "Angular acceleration of Link 2 (rad/s^2): "; cin >> aa2; cout << endl;
+
+    th1 = (th1d*3.142)/180;
+    th2 = (th2d*3.142)/180;
+
+    cout << "sigma value (Either 1 or -1) : "; cin >> sigma; cout << endl;
+    a = ((2*r1*r4*cos(th1))-(2*r2*r4*cos(th2)));
+    b = ((2*r1*r4*sin(th1))-(2*r2*r4*sin(th2)));
+    c = ((pow(r1,2))+(pow(r2,2))+(pow(r4,2))-(pow(r3,2))-(2*r1*r2*((cos(th1)*cos(th2))+(sin(th1)*sin(th2)))));
+
+    sq1 = ((pow(b,2))-(pow(c,2))+(pow(a,2)));
+
+    if(sq1>0)
+{
+    t = ((-b + (sigma * sqrt(sq1)))/(c-a));
+
+    th4 = 2 * (atan(t));
+
+    cout << "th4 = " << th4 << " rad" << endl << endl;
+
+    th4d = (th4 * 180)/3.142;
+
+    cout << "th4 = " << th4d << " degrees" << endl << endl;
+
+    sq2 = (((r1*sin(th1))+(r4*sin(th4))-(r2*sin(th2)))/((r1*cos(th1))+(r4*cos(th4))-(r2*cos(th2))));
+
+    th3 = atan(sq2);
+
+    cout << "th3 = " << th3 << " rad" << endl << endl;
+
+    th3d = (th3 * 180)/3.142;
+
+    cout << "th3 = " << th3d << " degrees" << endl << endl;
+
+    a1 = -(r3*sin(th3));
+    b1 = (r4*sin(th4));
+    c1 = -(r3*cos(th3));
+    d1 = (r4*cos(th4));
+
+    e1 = (r2*w2*sin(th2));
+    f1 = (r2*w2*cos(th2));
+
+    w3 = (((e1*d1)-(b1*f1))/((a1*d1)-(b1*c1)));
+    w4 = (((a1*f1)-(e1*c1))/((a1*d1)-(b1*c1)));
+
+    if(w3>0)
+    {
+
+        cout << "w3 : "<< w3 << " rad/s" << " (Counter-clockwise)" << endl << endl;
+    }
+    else if (w3<0)
+    {
+
+        cout << "w3 : "<< w3 << " rad/s" << " (Clockwise)" << endl << endl;
+    }
+    else
+    {
+        cout << "w3 : "<< w3 << " rad/s" << endl << endl;
+    }
+
+    if(w4>0)
+    {
+
+        cout << "w4 : "<< w4 << " rad/s" << " (Counter-Clockwise)" << endl << endl;
+    }
+    else if (w4<0)
+    {
+
+        cout << "w4 : "<< w4 << " rad/s" << " (Clockwise)" << endl << endl;
+    }
+    else
+    {
+        cout << "w4 : "<< w4 << " rad/s" << endl << endl;
+    }
+
+    v2c = r2 * w2 * cos(th2); v2s = r2 * w2 * sin(th2);
+    v3c = r3 * w3 * cos(th3); v3s = r3 * w3 * sin(th3);
+    v4c = r4 * w4 * cos(th4); v4s = r4 * w4 * sin(th4);
+
+    cout << "Velocity at link 2 : " << v2c << " i + " << v2s << " j mm/s" << endl << endl;
+    cout << "Velocity at link 3 : " << v3c << " i + " << v3s << " j mm/s" << endl << endl;
+    cout << "Velocity at link 4 : " << v4c << " i + " << v4s << " j mm/s" << endl << endl;
+
+    a2 = (-1*r3*sin(th3)); b2 = (r4*sin(th4)); c2 = (-1*r3*cos(th3)); d2 = (r4*cos(th4));
+
+    e2 = ((r2*aa2*sin(th2))+(r2*pow(w2,2)*cos(th2))+(r3*pow(w3,2)*cos(th3))-(r4*pow(w4,2)*cos(th4)));
+
+    f2 = ((r2*aa2*cos(th2))-(r2*pow(w2,2)*sin(th2))-(r3*pow(w3,2)*sin(-1*th3))-(r4*pow(w4,2)*sin(th4)));
+
+    aa3 = (((e2*d2)-(b2*f2))/((a2*d2)-(b2*c2)));
+    aa4 = (((a2*f2)-(c2*e2))/((a2*d2)-(b2*c2)));
+
+
+    cout << "The angular acceleration of Link 3: "<< aa3 << " rad/s^2" << endl << endl;
+    cout << "The angular acceleration of Link 4: "<< aa4 << " rad/s^2" << endl << endl;
+
+
+
+
+}
+    else
+    {
+        cout << "The mechanism cannot be assembled. Select new dimensions." << endl;
+    }
+
+    return 0;
+}
+
