@@ -1,0 +1,2 @@
+# Four-bar-linkage-analysis-Link-2-driver-
+The program, written in C++, shows the velocity and acceleration in the links of a four bar linkage (Kinematic system), where the link 2 is the driver. It works better if used with the diagram, as it shows which dimension needs to be followed. The program also checks whether such a system can be created in the first place, as some arrangements of four bar linkages are not possible due to dimensional errors. So, this program checks for that as well. 
